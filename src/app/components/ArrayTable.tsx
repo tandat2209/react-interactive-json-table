@@ -42,7 +42,11 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
 
   const onValueUpdate = (index: number, header: string, newValue: unknown) => {
     const updatedData = data.map((item, i) =>
-      i === index ? { ...item, [header]: newValue } : item
+      i === index
+        ? typeof item === 'object' && item !== null
+          ? { ...item, [header]: newValue }
+          : { [header]: newValue }
+        : item
     );
     onDataUpdate(updatedData);
   };
@@ -77,9 +81,9 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
               >
                 <JsonTable
                   data={
-                    typeof item === "object"
-                      ? (item[header] as unknown)
-                      : item[""]
+                    typeof item === "object" && item !== null
+                      ? (item as Record<string, unknown>)[header]
+                      : undefined
                   }
                   onDataUpdate={(newValue) => onValueUpdate(index, header, newValue)}
                 />
