@@ -1,6 +1,8 @@
 # JSON to Table Converter
 
-This is a web application built with [Next.js](https://nextjs.org) that allows users to convert JSON data into an interactive table format and vice versa.
+This is a web application that allows users to convert JSON data into an interactive table format and vice versa.
+
+Url: https://json2tableconverter.vercel.app
 
 ## Features
 
