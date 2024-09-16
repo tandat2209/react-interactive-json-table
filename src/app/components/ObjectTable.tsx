@@ -9,6 +9,13 @@ interface ObjectTableProps {
 }
 
 export default function ObjectTable({ data, onDataUpdate }: ObjectTableProps) {
+  const onKeyUpdate = (oldKey: string, newKey: string) => {
+    const updatedData = { ...data };
+    const oldKeyIndex = Object.keys(updatedData).indexOf(oldKey);
+    const entries = Object.entries(updatedData);
+    entries.splice(oldKeyIndex, 1, [newKey, updatedData[oldKey]]);
+    onDataUpdate(Object.fromEntries(entries));
+  };
   return (
     <Table className="border-collapse border border-black w-auto h-auto">
       <TableBody>
@@ -18,7 +25,10 @@ export default function ObjectTable({ data, onDataUpdate }: ObjectTableProps) {
             className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
           >
             <TableCell className="font-bold border border-black p-0.5 text-xs">
-              <EditableCell value={key} onUpdate={onDataUpdate} />
+              <EditableCell
+                value={key}
+                onUpdate={(newKey) => onKeyUpdate(key, newKey)}
+              />
             </TableCell>
             <TableCell className="border border-black p-0.5 text-xs">
               <JsonTable data={value} onDataUpdate={onDataUpdate} />
