@@ -1,12 +1,12 @@
-'use client';
-import { useState } from 'react';
-import JsonTable from './JsonTable';
+"use client";
+import { useState } from "react";
+import JsonTable from "./JsonTable";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 export default function JsonTableConverter() {
-  const [jsonInput, setJsonInput] = useState('');
+  const [jsonInput, setJsonInput] = useState("");
   const [parsedData, setParsedData] = useState<unknown>(null);
-  const [showJsonInput, setShowJsonInput] = useState(true);
-  const [showJsonTable, setShowJsonTable] = useState(true);
+  const [toggle, setToggle] = useState<string[]>(["json", "table"]);
 
   const handleJsonChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setJsonInput(e.target.value);
@@ -26,26 +26,27 @@ export default function JsonTableConverter() {
   return (
     <div className="flex flex-col w-full h-full p-4">
       <div className="flex mb-4">
-        <label className="mr-4">
-          <input
-            type="checkbox"
-            checked={showJsonInput}
-            onChange={() => setShowJsonInput(!showJsonInput)}
-          />
-          Show JSON Input
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={showJsonTable}
-            onChange={() => setShowJsonTable(!showJsonTable)}
-          />
-          Show JSON Table
-        </label>
+        <ToggleGroup
+          value={toggle}
+          onValueChange={setToggle}
+          type="multiple"
+          className="flex gap-4"
+        >
+          <ToggleGroupItem value="json" aria-label="Toggle JSON Input">
+            JSON
+          </ToggleGroupItem>
+          <ToggleGroupItem value="table" aria-label="Toggle JSON Table">
+            Table
+          </ToggleGroupItem>
+        </ToggleGroup>
       </div>
       <div className="flex flex-col md:flex-row gap-4 w-full h-full">
-        {showJsonInput && (
-          <div className={`w-full ${showJsonTable ? 'md:w-1/2' : ''} h-full`}>
+        {toggle.includes("json") && (
+          <div
+            className={`w-full ${
+              toggle.includes("table") ? "md:w-1/2" : ""
+            } h-full`}
+          >
             <textarea
               className="w-full h-full p-2 border rounded resize-none"
               value={jsonInput}
@@ -54,8 +55,12 @@ export default function JsonTableConverter() {
             />
           </div>
         )}
-        {showJsonTable && (
-          <div className={`w-full ${showJsonInput ? 'md:w-1/2' : ''} h-full overflow-auto`}>
+        {toggle.includes("table") && (
+          <div
+            className={`w-full ${
+              toggle.includes("json") ? "md:w-1/2" : ""
+            } h-full overflow-auto`}
+          >
             {parsedData ? (
               <JsonTable data={parsedData} onDataUpdate={handleDataUpdate} />
             ) : (
