@@ -18,7 +18,8 @@ export default function ObjectTable({ data, onDataUpdate }: ObjectTableProps) {
   };
 
   const onValueUpdate = (key: string, newValue: unknown) => {
-    const updatedData = { ...data, [key]: newValue };
+    const updatedData = { ...data };
+    updatedData[key] = newValue;
     onDataUpdate(updatedData);
   };
 
