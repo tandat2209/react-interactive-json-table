@@ -27,12 +27,11 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
   const handleKeyUpdate = (oldKey: string, newKey: string) => {
     const updatedData = data.map((item) => {
       if (typeof item === "object" && item !== null) {
-        const updatedItem: { [key: string]: unknown } = { ...item };
-        if (oldKey in updatedItem) {
-          updatedItem[newKey] = updatedItem[oldKey];
-          delete updatedItem[oldKey];
-        }
-        return updatedItem;
+        const entries = Object.entries(item);
+        const updatedEntries = entries.map(([key, value]) =>
+          key === oldKey ? [newKey, value] : [key, value]
+        );
+        return Object.fromEntries(updatedEntries);
       }
       return item;
     });
@@ -41,13 +40,20 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
   };
 
   const onValueUpdate = (index: number, header: string, newValue: unknown) => {
-    const updatedData = data.map((item, i) =>
-      i === index
-        ? typeof item === 'object' && item !== null
-          ? { ...item, [header]: newValue }
-          : { [header]: newValue }
-        : item
-    );
+    const updatedData = data.map((item, i) => {
+      if (i === index) {
+        if (typeof item === "object" && item !== null) {
+          const updatedItem: { [key: string]: unknown } = { ...item };
+          updatedItem[header] = newValue;
+          return updatedItem;
+        } else if (header === "") {
+          return newValue;
+        } else {
+          return { [header]: newValue };
+        }
+      }
+      return item;
+    });
     onDataUpdate(updatedData);
   };
 
@@ -82,10 +88,14 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
                 <JsonTable
                   data={
                     typeof item === "object" && item !== null
-                      ? (item as Record<string, unknown>)[header]
+                      ? (item as { [key: string]: unknown })[header]
+                      : header === ""
+                      ? item
                       : undefined
                   }
-                  onDataUpdate={(newValue) => onValueUpdate(index, header, newValue)}
+                  onDataUpdate={(newValue) =>
+                    onValueUpdate(index, header, newValue)
+                  }
                 />
               </TableCell>
             ))}
