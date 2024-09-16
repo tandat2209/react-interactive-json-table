@@ -40,6 +40,13 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
     onDataUpdate(updatedData);
   };
 
+  const onValueUpdate = (index: number, header: string, newValue: unknown) => {
+    const updatedData = data.map((item, i) =>
+      i === index ? { ...item, [header]: newValue } : item
+    );
+    onDataUpdate(updatedData);
+  };
+
   return (
     <Table className="border-collapse border border-black w-auto h-auto">
       <TableHeader>
@@ -74,7 +81,7 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
                       ? (item[header] as unknown)
                       : item[""]
                   }
-                  onDataUpdate={onDataUpdate}
+                  onDataUpdate={(newValue) => onValueUpdate(index, header, newValue)}
                 />
               </TableCell>
             ))}

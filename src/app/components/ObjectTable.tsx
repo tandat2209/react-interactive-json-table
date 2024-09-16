@@ -16,6 +16,12 @@ export default function ObjectTable({ data, onDataUpdate }: ObjectTableProps) {
     entries.splice(oldKeyIndex, 1, [newKey, updatedData[oldKey]]);
     onDataUpdate(Object.fromEntries(entries));
   };
+
+  const onValueUpdate = (key: string, newValue: unknown) => {
+    const updatedData = { ...data, [key]: newValue };
+    onDataUpdate(updatedData);
+  };
+
   return (
     <Table className="border-collapse border border-black w-auto h-auto">
       <TableBody>
@@ -31,7 +37,7 @@ export default function ObjectTable({ data, onDataUpdate }: ObjectTableProps) {
               />
             </TableCell>
             <TableCell className="border border-black p-0.5 text-xs">
-              <JsonTable data={value} onDataUpdate={onDataUpdate} />
+              <JsonTable data={value} onDataUpdate={(newValue) => onValueUpdate(key, newValue)} />
             </TableCell>
           </TableRow>
         ))}

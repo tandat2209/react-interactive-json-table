@@ -18,7 +18,9 @@ export default function JsonTable({ data, onDataUpdate }: JsonTableProps) {
       <EditableCell
         className="text-xs"
         value={data as string}
-        onUpdate={() => {}}
+        onUpdate={(value) => {
+          onDataUpdate(value);
+        }}
       />
     );
   }
