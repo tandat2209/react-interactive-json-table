@@ -18,6 +18,11 @@ export default function JsonTableConverter() {
     }
   };
 
+  const handleDataUpdate = (updatedData: unknown) => {
+    setParsedData(updatedData);
+    setJsonInput(JSON.stringify(updatedData, null, 2));
+  };
+
   return (
     <div className="flex flex-col w-full h-full p-4">
       <div className="flex mb-4">
@@ -52,7 +57,7 @@ export default function JsonTableConverter() {
         {showJsonTable && (
           <div className={`w-full ${showJsonInput ? 'md:w-1/2' : ''} h-full overflow-auto`}>
             {parsedData ? (
-              <JsonTable data={parsedData} />
+              <JsonTable data={parsedData} onDataUpdate={handleDataUpdate} />
             ) : (
               <p>Enter valid JSON to see the table</p>
             )}
