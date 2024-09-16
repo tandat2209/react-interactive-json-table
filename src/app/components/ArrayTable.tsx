@@ -19,7 +19,7 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
   const headers = Array.from(
     new Set(
       data.flatMap((item) =>
-        typeof item === "object" ? Object.keys(item as object) : [""]
+        typeof item === "object" && item !== null ? Object.keys(item as object) : [""]
       )
     )
   );
