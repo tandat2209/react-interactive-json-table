@@ -1,6 +1,6 @@
 {
   "name": "react-interactive-json-table",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "A React component for converting JSON to editable tables and vice versa",
   "main": "dist/index.js",
@@ -19,8 +19,13 @@
     "table",
     "converter"
   ],
-  "author": "Your Name",
+  "author": "Dat Nguyen",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tandat2209/react-interactive-json-table"
+  },
+  "homepage": "https://json2tableconverter.vercel.app",
   "peerDependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
@@ -33,5 +38,8 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tslib": "^2.7.0",
     "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "react-interactive-json-table": "^0.0.1"
   }
 }
