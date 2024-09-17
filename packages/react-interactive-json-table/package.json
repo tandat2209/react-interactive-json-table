@@ -1,6 +1,6 @@
 {
   "name": "react-interactive-json-table",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "description": "A React component for converting JSON to editable tables and vice versa",
   "main": "dist/index.js",
@@ -38,8 +38,5 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tslib": "^2.7.0",
     "typescript": "^5.6.2"
-  },
-  "dependencies": {
-    "react-interactive-json-table": "^0.0.1"
   }
 }
