@@ -16,7 +16,7 @@ export default function JsonTable({ data, onDataUpdate }: JsonTableProps) {
   } else {
     return (
       <EditableCell
-        className="text-xs"
+        className="editable-cell"
         value={data as string}
         onUpdate={(value) => {
           onDataUpdate(value);

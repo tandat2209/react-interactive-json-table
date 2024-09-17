@@ -1,0 +1,55 @@
+.json-table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  width: auto;
+  height: auto;
+}
+
+.json-table-header {
+  background-color: #e5e7eb;
+}
+
+.json-table-cell {
+  border: 1px solid black;
+  padding: 2px;
+  font-size: 12px;
+}
+
+.json-table-cell-bold {
+  font-weight: bold;
+}
+
+.json-table-row-even {
+  background-color: #ffffff;
+}
+
+.json-table-row-odd {
+  background-color: #f3f4f6;
+}
+
+.editable-cell {
+  padding: 2px;
+  font-size: 12px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editable-cell-input {
+  border: none;
+  background: transparent;
+  width: auto;
+}
+
+.editable-cell-editing {
+  border: 1px solid #3b82f6;
+}
+
+.json-table-cell-key {
+  font-weight: bold;
+}
+
+.json-table-cell-value {
+  /* Add any specific styles for value cells if needed */
+}

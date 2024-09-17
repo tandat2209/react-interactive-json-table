@@ -2,6 +2,7 @@ import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import postcss from 'rollup-plugin-postcss';
 
 export default {
   input: 'src/index.ts',
@@ -22,5 +23,10 @@ export default {
     resolve(),
     commonjs(),
     typescript({ tsconfig: './tsconfig.json' }),
+    postcss({
+      extensions: ['.css'],
+      inject: true, // This will inject the CSS into the bundle
+      minimize: true,
+    }),
   ],
 };

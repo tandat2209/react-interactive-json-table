@@ -1,27 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Pencil1Icon, CheckIcon } from "@radix-ui/react-icons";
 
-const cellStyle = {
-  padding: '2px',
-  fontSize: '12px',
-  lineHeight: '1',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-};
-
-const inputStyle = {
-  ...cellStyle,
-  border: 'none',
-  background: 'transparent',
-  width: 'auto',
-};
-
-const editingStyle = {
-  ...inputStyle,
-  border: '1px solid #3b82f6',
-};
-
 interface EditableCellProps<T> {
   value: T;
   onUpdate: (value: T) => void;
@@ -57,7 +36,7 @@ export default function EditableCell<T>({
 
   if (isEditing) {
     return (
-      <div style={editingStyle}>
+      <div className="editable-cell editable-cell-editing">
         <input
           ref={inputRef}
           type="text"
@@ -68,6 +47,7 @@ export default function EditableCell<T>({
           }}
           onKeyDown={handleKeyDown}
           onBlur={handleSubmit}
+          className="editable-cell-input"
           {...props}
         />
         <CheckIcon onClick={handleSubmit} style={{ cursor: 'pointer' }} />
@@ -77,7 +57,7 @@ export default function EditableCell<T>({
 
   return (
     <div
-      style={cellStyle}
+      className="editable-cell"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >

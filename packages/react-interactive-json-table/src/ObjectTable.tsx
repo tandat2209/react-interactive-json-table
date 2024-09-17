@@ -23,20 +23,20 @@ export default function ObjectTable({ data, onDataUpdate }: ObjectTableProps) {
   };
 
   return (
-    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: 'auto', height: 'auto' }}>
+    <table className="json-table">
       <tbody>
         {Object.entries(data).map(([key, value], index) => (
           <tr
             key={key}
-            style={{ backgroundColor: index % 2 === 0 ? 'white' : '#f3f4f6' }}
+            className={index % 2 === 0 ? 'json-table-row-even' : 'json-table-row-odd'}
           >
-            <td style={{ border: '1px solid black', padding: '2px', fontSize: '12px', fontWeight: 'bold' }}>
+            <td className="json-table-cell json-table-cell-bold">
               <EditableCell
                 value={key}
                 onUpdate={(newKey) => onKeyUpdate(key, newKey)}
               />
             </td>
-            <td style={{ border: '1px solid black', padding: '2px', fontSize: '12px' }}>
+            <td className="json-table-cell">
               <JsonTable data={value} onDataUpdate={(newValue) => onValueUpdate(key, newValue)} />
             </td>
           </tr>

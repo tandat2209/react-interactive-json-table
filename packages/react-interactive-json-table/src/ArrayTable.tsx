@@ -1,6 +1,7 @@
 import React from "react";
 import EditableCell from "./EditableCell";
 import JsonTable from "./JsonTable";
+import "./styles.css";
 
 interface ArrayTableProps {
   data: unknown[];
@@ -11,7 +12,9 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
   const headers = Array.from(
     new Set(
       data.flatMap((item) =>
-        typeof item === "object" && item !== null ? Object.keys(item as object) : [""]
+        typeof item === "object" && item !== null
+          ? Object.keys(item as object)
+          : [""]
       )
     )
   );
@@ -50,14 +53,11 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
   };
 
   return (
-    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: 'auto', height: 'auto' }}>
+    <table className="json-table">
       <thead>
-        <tr style={{ backgroundColor: '#e5e7eb' }}>
+        <tr className="json-table-header">
           {headers.map((header) => (
-            <th
-              key={header}
-              style={{ border: '1px solid black', padding: '2px', fontSize: '12px', fontWeight: 'bold' }}
-            >
+            <th key={header} className="json-table-cell json-table-cell-bold">
               <EditableCell
                 value={header}
                 onUpdate={(newHeader) => handleKeyUpdate(header, newHeader)}
@@ -70,13 +70,10 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
         {data.map((item, index) => (
           <tr
             key={index}
-            style={{ backgroundColor: index % 2 === 0 ? '#ffffff' : '#f3f4f6' }}
+            className={index % 2 === 0 ? 'json-table-row-even' : 'json-table-row-odd'}
           >
             {headers.map((header) => (
-              <td
-                key={header}
-                style={{ border: '1px solid black', padding: '2px', fontSize: '12px' }}
-              >
+              <td key={header} className="json-table-cell">
                 <JsonTable
                   data={
                     typeof item === "object" && item !== null

@@ -1,3 +1,4 @@
+import './styles.css';
 export { default } from './JsonTable';
 export { default as EditableCell } from './EditableCell';
 export { default as ArrayTable } from './ArrayTable';
