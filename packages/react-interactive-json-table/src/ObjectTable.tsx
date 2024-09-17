@@ -1,5 +1,4 @@
 import React from "react";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import EditableCell from "./EditableCell";
 import JsonTable from "./JsonTable";
 
@@ -24,25 +23,25 @@ export default function ObjectTable({ data, onDataUpdate }: ObjectTableProps) {
   };
 
   return (
-    <Table className="border-collapse border border-black w-auto h-auto">
-      <TableBody>
+    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: 'auto', height: 'auto' }}>
+      <tbody>
         {Object.entries(data).map(([key, value], index) => (
-          <TableRow
+          <tr
             key={key}
-            className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
+            style={{ backgroundColor: index % 2 === 0 ? 'white' : '#f3f4f6' }}
           >
-            <TableCell className="font-bold border border-black p-0.5 text-xs">
+            <td style={{ border: '1px solid black', padding: '2px', fontSize: '12px', fontWeight: 'bold' }}>
               <EditableCell
                 value={key}
                 onUpdate={(newKey) => onKeyUpdate(key, newKey)}
               />
-            </TableCell>
-            <TableCell className="border border-black p-0.5 text-xs">
+            </td>
+            <td style={{ border: '1px solid black', padding: '2px', fontSize: '12px' }}>
               <JsonTable data={value} onDataUpdate={(newValue) => onValueUpdate(key, newValue)} />
-            </TableCell>
-          </TableRow>
+            </td>
+          </tr>
         ))}
-      </TableBody>
-    </Table>
+      </tbody>
+    </table>
   );
 }

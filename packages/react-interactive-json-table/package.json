@@ -1,0 +1,37 @@
+{
+  "name": "react-interactive-json-table",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A React component for converting JSON to editable tables and vice versa",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "json",
+    "table",
+    "converter"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "rollup": "^4.21.3",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "tslib": "^2.7.0",
+    "typescript": "^5.6.2"
+  }
+}

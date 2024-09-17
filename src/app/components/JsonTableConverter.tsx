@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import JsonTable from "./JsonTable";
+import JsonTable from "react-interactive-json-table";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 export default function JsonTableConverter() {

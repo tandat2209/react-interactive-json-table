@@ -1,12 +1,4 @@
 import React from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import EditableCell from "./EditableCell";
 import JsonTable from "./JsonTable";
 
@@ -58,32 +50,32 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
   };
 
   return (
-    <Table className="border-collapse border border-black w-auto h-auto">
-      <TableHeader>
-        <TableRow className="bg-gray-200">
+    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: 'auto', height: 'auto' }}>
+      <thead>
+        <tr style={{ backgroundColor: '#e5e7eb' }}>
           {headers.map((header) => (
-            <TableHead
+            <th
               key={header}
-              className="border border-black p-0.5 text-xs font-bold"
+              style={{ border: '1px solid black', padding: '2px', fontSize: '12px', fontWeight: 'bold' }}
             >
               <EditableCell
                 value={header}
                 onUpdate={(newHeader) => handleKeyUpdate(header, newHeader)}
               />
-            </TableHead>
+            </th>
           ))}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
+        </tr>
+      </thead>
+      <tbody>
         {data.map((item, index) => (
-          <TableRow
+          <tr
             key={index}
-            className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
+            style={{ backgroundColor: index % 2 === 0 ? '#ffffff' : '#f3f4f6' }}
           >
             {headers.map((header) => (
-              <TableCell
+              <td
                 key={header}
-                className="border border-black p-0.5 text-xs"
+                style={{ border: '1px solid black', padding: '2px', fontSize: '12px' }}
               >
                 <JsonTable
                   data={
@@ -97,11 +89,11 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
                     onValueUpdate(index, header, newValue)
                   }
                 />
-              </TableCell>
+              </td>
             ))}
-          </TableRow>
+          </tr>
         ))}
-      </TableBody>
-    </Table>
+      </tbody>
+    </table>
   );
 }
