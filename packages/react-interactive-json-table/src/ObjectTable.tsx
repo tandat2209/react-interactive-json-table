@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import clsx from "clsx";
 import EditableCell from "./EditableCell";
 import JsonTable from "./JsonTable";
 
@@ -8,6 +9,8 @@ interface ObjectTableProps {
 }
 
 export default function ObjectTable({ data, onDataUpdate }: ObjectTableProps) {
+  const [hoveredKey, setHoveredKey] = useState<string | null>(null);
+
   const onKeyUpdate = (oldKey: string, newKey: string) => {
     const updatedData = { ...data };
     const oldKeyIndex = Object.keys(updatedData).indexOf(oldKey);
@@ -28,9 +31,14 @@ export default function ObjectTable({ data, onDataUpdate }: ObjectTableProps) {
         {Object.entries(data).map(([key, value], index) => (
           <tr
             key={key}
-            className={index % 2 === 0 ? 'json-table-row-even' : 'json-table-row-odd'}
+            className={clsx(
+              index % 2 === 0 ? 'json-table-row-even' : 'json-table-row-odd',
+              key === hoveredKey && 'json-table-row-highlighted'
+            )}
+            onMouseEnter={() => setHoveredKey(key)}
+            onMouseLeave={() => setHoveredKey(null)}
           >
-            <td className="json-table-cell json-table-cell-bold">
+            <td className={clsx("json-table-cell", "json-table-cell-bold")}>
               <EditableCell
                 value={key}
                 onUpdate={(newKey) => onKeyUpdate(key, newKey)}

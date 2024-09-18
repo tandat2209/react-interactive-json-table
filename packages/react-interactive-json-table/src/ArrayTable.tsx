@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import clsx from "clsx";
 import EditableCell from "./EditableCell";
 import JsonTable from "./JsonTable";
-import "./styles.css";
 
 interface ArrayTableProps {
   data: unknown[];
@@ -9,6 +9,8 @@ interface ArrayTableProps {
 }
 
 export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
+  const [hoveredCol, setHoveredCol] = useState<string | null>(null);
+
   const headers = Array.from(
     new Set(
       data.flatMap((item) =>
@@ -57,7 +59,16 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
       <thead>
         <tr className="json-table-header">
           {headers.map((header) => (
-            <th key={header} className="json-table-cell json-table-cell-bold">
+            <th
+              key={header}
+              className={clsx(
+                "json-table-cell",
+                "json-table-cell-bold",
+                hoveredCol === header && "json-table-header-highlighted-array"
+              )}
+              onMouseEnter={() => setHoveredCol(header)}
+              onMouseLeave={() => setHoveredCol(null)}
+            >
               <EditableCell
                 value={header}
                 onUpdate={(newHeader) => handleKeyUpdate(header, newHeader)}
@@ -70,10 +81,20 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
         {data.map((item, index) => (
           <tr
             key={index}
-            className={index % 2 === 0 ? 'json-table-row-even' : 'json-table-row-odd'}
+            className={clsx(
+              index % 2 === 0 ? "json-table-row-even" : "json-table-row-odd"
+            )}
           >
             {headers.map((header) => (
-              <td key={header} className="json-table-cell">
+              <td
+                key={header}
+                className={clsx(
+                  "json-table-cell",
+                  hoveredCol === header && "json-table-header-highlighted"
+                )}
+                onMouseEnter={() => setHoveredCol(header)}
+                onMouseLeave={() => setHoveredCol(null)}
+              >
                 <JsonTable
                   data={
                     typeof item === "object" && item !== null

@@ -53,3 +53,16 @@
 .json-table-cell-value {
   /* Add any specific styles for value cells if needed */
 }
+
+.json-table-row-highlighted {
+  background-color: #e6f2ff; /* Light blue background */
+  transition: background-color 0.2s ease; /* Smooth transition for hover effect */
+}
+
+.json-table-row-highlighted-array {
+  background-color: #e6f7ff; /* Light blue color for rows */
+}
+
+.json-table-header-highlighted-array {
+  background-color: #d1e9ff; /* Slightly darker blue for the header */
+}
