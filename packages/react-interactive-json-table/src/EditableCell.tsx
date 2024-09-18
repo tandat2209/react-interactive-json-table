@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Pencil1Icon, CheckIcon } from "@radix-ui/react-icons";
+import Pencil1Icon from "./icons/Pencil1Icon";
+import CheckIcon from "./icons/CheckIcon";
 
 interface EditableCellProps<T> {
   value: T;
