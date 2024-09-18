@@ -11,7 +11,6 @@
 
 .json-table-cell {
   border: 1px solid black;
-  padding: 2px;
   font-size: 12px;
 }
 
@@ -35,6 +34,26 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.editable-cell-icon {
+  cursor: pointer;
+  margin-left: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.editable-cell-icon.visible {
+  opacity: 1;
+}
+
+.editable-cell-icon.hidden {
+  opacity: 0;
+}
+
+.editable-cell:hover .editable-cell-icon {
+  opacity: 1;
+}
+
 
 .editable-cell-input {
   border: none;
@@ -65,4 +84,52 @@
 
 .json-table-header-highlighted-array {
   background-color: #d1e9ff; /* Slightly darker blue for the header */
+}
+
+.action-editable-cell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.delete-button,
+.confirm-delete-button {
+  color: #ff4d4f;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: block;
+}
+
+.delete-button:hover,
+.confirm-delete-button:hover {
+  background-color: rgba(255, 77, 79, 0.1);
+}
+
+.confirm-delete-button {
+  color: #52c41a;
+}
+
+.confirm-delete-button:hover {
+  background-color: rgba(82, 196, 26, 0.1);
+}
+
+.json-table-header-delete,
+.json-table-cell-delete {
+  background-color: #ffcccb;
+}
+
+.json-table-header-delete {
+  position: relative;
+}
+
+.json-table-header-delete::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 0, 0, 0.1);
+  pointer-events: none;
 }

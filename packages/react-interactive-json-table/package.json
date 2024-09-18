@@ -1,6 +1,6 @@
 {
   "name": "react-interactive-json-table",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "description": "A React component for displaying and editing JSON data in an interactive table format",
   "main": "dist/index.js",
@@ -39,5 +39,8 @@
     "rollup-plugin-postcss": "^4.0.2",
     "tslib": "^2.7.0",
     "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1"
   }
 }

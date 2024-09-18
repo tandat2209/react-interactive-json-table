@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Pencil1Icon from "./icons/Pencil1Icon";
 import CheckIcon from "./icons/CheckIcon";
+import clsx from "clsx";
 
 interface EditableCellProps<T> {
   value: T;
@@ -51,7 +52,7 @@ export default function EditableCell<T>({
           className="editable-cell-input"
           {...props}
         />
-        <CheckIcon onClick={handleSubmit} style={{ cursor: 'pointer' }} />
+        <CheckIcon onClick={handleSubmit} style={{ cursor: "pointer" }} />
       </div>
     );
   }
@@ -63,12 +64,13 @@ export default function EditableCell<T>({
       onMouseLeave={() => setIsHovering(false)}
     >
       <span>{String(currentValue)}</span>
-      {isHovering && (
-        <Pencil1Icon
-          onClick={() => setIsEditing(true)}
-          style={{ cursor: 'pointer' }}
-        />
-      )}
+      <Pencil1Icon
+        onClick={() => setIsEditing(true)}
+        className={clsx(
+          'editable-cell-icon',
+          isHovering ? 'visible' : 'hidden'
+        )}
+      />
     </div>
   );
 }

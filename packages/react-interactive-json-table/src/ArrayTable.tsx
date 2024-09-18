@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import EditableCell from "./EditableCell";
 import JsonTable from "./JsonTable";
+import CheckIcon from "./icons/CheckIcon";
+import TrashIcon from "./icons/TrashIcon";
 
 interface ArrayTableProps {
   data: unknown[];
@@ -10,6 +12,8 @@ interface ArrayTableProps {
 
 export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
   const [hoveredCol, setHoveredCol] = useState<string | null>(null);
+  const [deleteCol, setDeleteCol] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
 
   const headers = Array.from(
     new Set(
@@ -54,6 +58,22 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
     onDataUpdate(updatedData);
   };
 
+  const handleDeleteColumn = (header: string) => {
+    const updatedData = data.map((item) => {
+      if (typeof item === "object" && item !== null) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { [header]: deletedValue, ...rest } = item as {
+          [key: string]: unknown;
+        };
+        return rest;
+      }
+      return item;
+    });
+    onDataUpdate(updatedData);
+    setDeleteCol(null);
+    setConfirmDelete(null);
+  };
+
   return (
     <table className="json-table">
       <thead>
@@ -64,15 +84,42 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
               className={clsx(
                 "json-table-cell",
                 "json-table-cell-bold",
-                hoveredCol === header && "json-table-header-highlighted-array"
+                hoveredCol === header && "json-table-header-highlighted-array",
+                deleteCol === header && "json-table-header-delete"
               )}
               onMouseEnter={() => setHoveredCol(header)}
-              onMouseLeave={() => setHoveredCol(null)}
+              onMouseLeave={() => {
+                setHoveredCol(null);
+                if (confirmDelete !== header) {
+                  setDeleteCol(null);
+                }
+              }}
             >
-              <EditableCell
-                value={header}
-                onUpdate={(newHeader) => handleKeyUpdate(header, newHeader)}
-              />
+              <div className="flex items-center justify-between">
+                <ActionEditableCell
+                  actions={
+                    hoveredCol === header && (
+                      confirmDelete === header ? (
+                        <CheckIcon
+                          className="confirm-delete-button"
+                          onClick={() => handleDeleteColumn(header)}
+                        />
+                      ) : (
+                        <TrashIcon
+                          className="delete-button"
+                          onMouseEnter={() => setDeleteCol(header)}
+                          onClick={() => setConfirmDelete(header)}
+                        />
+                      )
+                    )
+                  }
+                >
+                  <EditableCell
+                    value={header}
+                    onUpdate={(newHeader) => handleKeyUpdate(header, newHeader)}
+                  />
+                </ActionEditableCell>
+              </div>
             </th>
           ))}
         </tr>
@@ -90,7 +137,8 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
                 key={header}
                 className={clsx(
                   "json-table-cell",
-                  hoveredCol === header && "json-table-header-highlighted"
+                  hoveredCol === header && "json-table-header-highlighted",
+                  deleteCol === header && "json-table-cell-delete"
                 )}
                 onMouseEnter={() => setHoveredCol(header)}
                 onMouseLeave={() => setHoveredCol(null)}
@@ -113,5 +161,26 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
         ))}
       </tbody>
     </table>
+  );
+}
+
+function ActionEditableCell({
+  children,
+  actions,
+}: {
+  children: React.ReactNode;
+  actions: React.ReactNode;
+}) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="action-editable-cell"
+    >
+      {children}
+      {isHovered && actions}
+    </div>
   );
 }
