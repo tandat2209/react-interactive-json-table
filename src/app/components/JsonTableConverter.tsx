@@ -2,11 +2,12 @@
 import { useState } from "react";
 import JsonTable from "react-interactive-json-table";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import JsonView from "@uiw/react-json-view";
 
 export default function JsonTableConverter() {
   const [jsonInput, setJsonInput] = useState("");
   const [parsedData, setParsedData] = useState<unknown>(null);
-  const [toggle, setToggle] = useState<string[]>(["json", "table"]);
+  const [toggle, setToggle] = useState<string[]>(["json", "table", "tree"]);
 
   const handleJsonChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setJsonInput(e.target.value);
@@ -38,14 +39,15 @@ export default function JsonTableConverter() {
           <ToggleGroupItem value="table" aria-label="Toggle JSON Table">
             Table
           </ToggleGroupItem>
+          <ToggleGroupItem value="tree" aria-label="Toggle JSON Tree">
+            Tree
+          </ToggleGroupItem>
         </ToggleGroup>
       </div>
       <div className="flex flex-col md:flex-row gap-4 w-full h-full">
         {toggle.includes("json") && (
           <div
-            className={`w-full ${
-              toggle.includes("table") ? "md:w-1/2" : ""
-            } h-full`}
+            className={`w-full ${toggle.includes("table") || toggle.includes("tree") ? "flex-1" : ""} h-full`}
           >
             <textarea
               className="w-full h-full p-2 border rounded resize-none"
@@ -57,14 +59,23 @@ export default function JsonTableConverter() {
         )}
         {toggle.includes("table") && (
           <div
-            className={`w-full ${
-              toggle.includes("json") ? "md:w-1/2" : ""
-            } h-full overflow-auto`}
+            className={`w-full ${toggle.includes("json") ? "flex-1" : ""} ${toggle.includes("tree") ? "flex-1" : ""} h-full overflow-auto`}
           >
             {parsedData ? (
               <JsonTable data={parsedData} onDataUpdate={handleDataUpdate} />
             ) : (
               <p>Enter valid JSON to see the table</p>
+            )}
+          </div>
+        )}
+        {toggle.includes("tree") && (
+          <div
+            className={`w-full ${toggle.includes("json") ? "flex-1" : ""} ${toggle.includes("table") ? "flex-1" : ""} h-full overflow-auto`}
+          >
+            {parsedData ? (
+              <JsonView value={parsedData} />
+            ) : (
+              <p>Enter valid JSON to see the tree</p>
             )}
           </div>
         )}
