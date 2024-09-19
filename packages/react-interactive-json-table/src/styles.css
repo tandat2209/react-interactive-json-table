@@ -115,21 +115,21 @@
 }
 
 .json-table-header-delete,
-.json-table-cell-delete {
-  background-color: #ffcccb;
-}
-
-.json-table-header-delete {
+.json-table-cell-delete,
+.json-table-row-delete {
   position: relative;
 }
 
-.json-table-header-delete::after {
+.json-table-header-delete::after,
+.json-table-cell-delete::after,
+.json-table-row-delete::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 0, 0, 0.1);
+  background-color: #ffcccb;
+  opacity: 0.5;
   pointer-events: none;
 }

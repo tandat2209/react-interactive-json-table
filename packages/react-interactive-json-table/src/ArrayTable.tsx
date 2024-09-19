@@ -4,6 +4,7 @@ import EditableCell from "./EditableCell";
 import JsonTable from "./JsonTable";
 import CheckIcon from "./icons/CheckIcon";
 import TrashIcon from "./icons/TrashIcon";
+import ActionableCell from "./ActionableCell";
 
 interface ArrayTableProps {
   data: unknown[];
@@ -96,7 +97,7 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
               }}
             >
               <div className="flex items-center justify-between">
-                <ActionEditableCell
+                <ActionableCell
                   actions={
                     hoveredCol === header && (
                       confirmDelete === header ? (
@@ -108,6 +109,7 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
                         <TrashIcon
                           className="delete-button"
                           onMouseEnter={() => setDeleteCol(header)}
+                          onMouseLeave={() => setDeleteCol(null)}
                           onClick={() => setConfirmDelete(header)}
                         />
                       )
@@ -118,7 +120,7 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
                     value={header}
                     onUpdate={(newHeader) => handleKeyUpdate(header, newHeader)}
                   />
-                </ActionEditableCell>
+                </ActionableCell>
               </div>
             </th>
           ))}
@@ -161,26 +163,5 @@ export default function ArrayTable({ data, onDataUpdate }: ArrayTableProps) {
         ))}
       </tbody>
     </table>
-  );
-}
-
-function ActionEditableCell({
-  children,
-  actions,
-}: {
-  children: React.ReactNode;
-  actions: React.ReactNode;
-}) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="action-editable-cell"
-    >
-      {children}
-      {isHovered && actions}
-    </div>
   );
 }
